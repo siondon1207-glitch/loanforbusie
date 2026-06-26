@@ -1,23 +1,702 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+ <style>
+    :root {
+      --primary-color: #1e40af;
+      --secondary-color: #0d9488;
+      --accent-color: #3b82f6;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-dark: #0f172a;
+      --text-light: #475569;
+      --border-color: #e2e8f0;
+      --success-color: #16a34a;
+    }
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.8;
+      margin: 0;
+      padding: 0;
+      color: var(--text-dark);
+      background-color: var(--bg-color);
+    }
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #0d9488);
+      color: #ffffff;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    header p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: auto;
+      opacity: 0.9;
+    }
+    nav {
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 10px 0;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .nav-container a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      transition: color 0.2s ease;
+    }
+    .nav-container a:hover {
+      color: var(--primary-color);
+    }
+    main {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    section {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+    }
+    h2 {
+      color: var(--primary-color);
+      font-size: 1.6rem;
+      border-left: 5px solid var(--secondary-color);
+      padding-left: 15px;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+    h3 {
+      color: var(--text-dark);
+      font-size: 1.25rem;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+    .highlight-box {
+      background-color: #eff6ff;
+      border-left: 4px solid var(--accent-color);
+      padding: 20px;
+      border-radius: 4px 12px 12px 4px;
+      margin-bottom: 25px;
+    }
+    .highlight-box p {
+      margin-bottom: 0;
+      color: var(--text-light);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 14px;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f5f9;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+    .calculator-container {
+      background-color: #f0fdf4;
+      border: 2px solid var(--secondary-color);
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 30px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .form-group select, .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    .calc-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background-color: var(--secondary-color);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .calc-btn:hover {
+      background-color: #0f766e;
+    }
+    .result-box {
+      display: none;
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 25px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+    .result-box h4 {
+      margin-top: 0;
+      color: var(--secondary-color);
+      font-size: 1.2rem;
+    }
+    .repayment-schedule-table {
+      margin-top: 15px;
+    }
+    .external-links ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .external-links li {
+      margin-bottom: 12px;
+    }
+    .external-links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .external-links a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background-color: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+      border-top: 1px solid #1e293b;
+    }
+    footer p {
+      text-align: center;
+      margin: 5px 0;
+    }
+    footer a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+    .visual-graph {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .graph-card {
+      flex: 1;
+      min-width: 250px;
+      background-color: #f1f5f9;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      border-top: 4px solid var(--accent-color);
+    }
+    .graph-card-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .graph-card-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin: 10px 0;
+    }
+    .graph-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://finance.reliabledone.com/#webpage",
+        "url": "https://finance.reliabledone.com",
+        "name": "2026년 소상공인 직접대출 조건 한도 및 금리 비교 가이드",
+        "description": "2026년 중소벤처기업부와 소상공인시장진흥공단에서 지원하는 소상공인 직접대출의 자격 조건, 한도, 금리, 그리고 온라인 신청 절차를 상세히 분석한 종합 전문 가이드입니다.",
+        "inLanguage": "ko-KR"
+      },
+      {
+        "@type": "FinancialProduct",
+        "@id": "https://finance.reliabledone.com/#financialproduct",
+        "name": "소상공인 직접대출",
+        "description": "정부에서 자영업자와 영세 기업을 지원하기 위해 낮은 이율로 자금을 융자하는 정책 자금",
+        "feesAndCommissionsSpecification": "취급수수료 및 추가 금융 보증료 면제",
+        "interestRate": {
+          "@type": "QuantitativeValue",
+          "value": "3.44",
+          "unitText": "연이율 기준금리"
+        },
+        "provider": {
+          "@type": "GovernmentOrganization",
+          "name": "소상공인시장진흥공단",
+          "url": "https://www.semas.or.kr"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1>2026년 소상공인 직접대출 조건 한도 및 금리 비교 가이드</h1>
+    <p>중소벤처기업부와 소상공인시장진흥공단이 지원하는 저리 정책자금의 모든 종류와 자격요건, 그리고 실시간 예상 상환 스케줄 계산기까지 원스톱으로 확인하세요.</p>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <a href="#intro">자금 종합 개요</a>
+      <a href="#eligibility">종류 및 자격 조건</a>
+      <a href="#calculator">실시간 모의 계산기</a>
+      <a href="#comparison">직접대출 vs 대리대출</a>
+      <a href="#community">현장 후기 및 분석</a>
+      <a href="#ai-guide">AI 검색 최적화 팁</a>
+      <a href="#faq">자주 묻는 질문</a>
+      <a href="#links">공식 정보원 링크</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="intro">
+      <h2>소상공인 직접대출 종합 개요</h2>
+      <p>
+        장기화된 경기 침체 속에서 자영업자들의 금융 부담을 낮추기 위해 대한민국 정부와 관계 부처는 지속적으로 소상공인 직접대출을 확대 운용하고 있습니다. 이 제도는 복잡한 시중 민간 금융사의 대출 가격 기준에서 벗어나 소상공인시장진흥공단이 자체적인 예산을 가지고 다이렉트 심사를 진행하는 혁신적인 경영 보조 수단입니다. 일반적인 가계 대출이나 시중의 고금리 상품과 비교했을 때 매우 큰 폭의 금리 우대 조정을 받을 수 있어, 이자 할인을 원하거나 일시적인 유동성 위기를 타개하기 위한 가장 안전하고 확실한 추천 자금으로 꼽힙니다.
+      </p>
+      <div class="highlight-box">
+        <p>
+          2026년 소상공인 정책자금 직접대출 융자사업은 총 3조 3620억원 규모로 집행되며, 일시적 경영 보조뿐만 아니라 혁신 성장을 꾀하는 유망한 소기업 및 영세 점포들에게 성장 동력을 공급하는 데 집중하고 있습니다.
+        </p>
+      </div>
+      <p>
+        본인이 직접 받아보지 않은 사람은 이 신청 절차가 단순히 어렵거나 시간이 오래 걸린다는 편견을 가지기 쉽습니다. 하지만 최근에는 인터넷 전용 전산화 및 온라인 접수 시스템이 고도화되어 모바일 앱 및 스마트폰 어플리케이션을 통해서도 서류를 비대면으로 즉시 제출하는 간편 신청 방식이 정착되었습니다. 전문가의 상담이나 기업 컨설팅 과정을 유료로 거치지 않더라도, 본 안내 페이지에서 지원하는 세부 가이드라인과 예상 계산 도구를 활용하신다면 무리 없이 자가 진단을 마치고 자금을 적시에 공급받을 수 있습니다.
+      </p>
+    </section>
+
+    <section id="eligibility">
+      <h2>2026년 직접대출 종류 및 상세 자격 요건</h2>
+      <p>
+        소상공인 직접대출은 자격 요건과 기업의 현 상황에 따라 여러 종류로 세분화됩니다. 각 프로그램마다 예상 수령 가능한 최대한도와 금리가 상이하게 설정되어 있으므로, 자영업 사장님 본인의 신용 점수와 매출 현황 등을 입체적으로 검토하여 우선 순위를 조율하셔야 합니다.
+      </p>
+
+      <div class="visual-graph">
+        <div class="graph-card">
+          <div class="graph-card-title">일시적경영애로자금</div>
+          <div class="graph-card-value">최대 7천만원</div>
+          <div class="graph-card-desc">연 3.44% 수준의 저렴한 변동금리 적용</div>
+        </div>
+        <div class="graph-card">
+          <div class="graph-card-title">신용취약소상공인자금</div>
+          <div class="graph-card-value">최대 3천만원</div>
+          <div class="graph-card-desc">NCB 839점 이하 중저신용자 집중 지원</div>
+        </div>
+        <div class="graph-card">
+          <div class="graph-card-title">혁신성장촉진자금</div>
+          <div class="graph-card-value">최대 10억원</div>
+          <div class="graph-card-desc">수출 및 스마트 기기 도입 기업 시설자금 우대</div>
+        </div>
+      </div>
+
+      <h3>핵심 5대 정책자금 프로그램 비교표</h3>
+      <p>
+        아래 표는 2026년 변경 시행 고시안을 기준으로 정리된 직접대출 핵심 자금들의 평균적인 금리대와 한도 금액입니다. 본인의 기업이 해당 대상 요건에 충족하는지 비교해 보시기 바랍니다.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>자금 종류</th>
+            <th>신청 요건 및 대상 범위</th>
+            <th>예상 최대 한도</th>
+            <th>대출 금리 (기준)</th>
+            <th>거치 및 상환 기간</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>일시적경영애로자금</td>
+            <td>연매출 1억 4백만원 미만, 업력 7년 미만의 경영 애로 소상공인</td>
+            <td>최대 70,000,000 원</td>
+            <td>연 3.44 % (변동)</td>
+            <td>5년 (거치기간 2년 포함)</td>
+          </tr>
+          <tr>
+            <td>신용취약소상공인자금</td>
+            <td>NCB 신용점수 839점 이하 중저신용자 중 소진공 교육 이수자</td>
+            <td>최대 30,000,000 원</td>
+            <td>연 5.04 % (고정)</td>
+            <td>5년 (거치기간 2년 포함)</td>
+          </tr>
+          <tr>
+            <td>재도전특별자금</td>
+            <td>재창업 준비 또는 초기 단계, 채무조정 성실상환자</td>
+            <td>최대 70,000,000 원 ~ 200,000,000 원</td>
+            <td>연 3.84 % ~ 5.04 %</td>
+            <td>5년 (거치기간 2년 포함)</td>
+          </tr>
+          <tr>
+            <td>혁신성장촉진자금</td>
+            <td>스마트기술 도입 소상공인, 백년가게, 수출 영위 혁신형 소기업</td>
+            <td>운전 1억 ~ 2억원 / 시설 최대 10억원</td>
+            <td>연 3.84 % (변동)</td>
+            <td>운전 5년 / 시설 최대 8년</td>
+          </tr>
+          <tr>
+            <td>상생성장지원자금</td>
+            <td>TOPS 프로그램 수혜 대상 또는 상생협약 플랫폼 입점 소상공인</td>
+            <td>최대 100,000,000 원 ~ 200,000,000 원</td>
+            <td>연 3.44 % ~ 3.84 %</td>
+            <td>5년 (거치기간 2년 포함)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        신청하려는 소상공인 업체는 상시근로자 기준을 충족해야 합니다. 광업, 제조업, 건설업, 운수업종은 상시 노동자 수 10인 미만, 그 외 서비스업 및 유통·도소매업종은 상시 근로자 5인 미만인 영세 사업장에 한하여 수혜 자격이 주어집니다. 단, 도박 및 사행성 게임업, 유흥 및 향락 전문 업종, 일부 고소득 전문직, 부동산 투기 업종 등은 정부 정책 자금 지원 제외 대상에 속하므로 사전에 가입 자격을 꼼꼼하게 따져보아야 불필요한 비용의 낭비나 부적격 탈락 처리를 방지할 수 있습니다.
+      </p>
+    </section>
+
+    <section id="calculator">
+      <h2>대화형 예상 한도 및 월 상환액 실시간 계산기</h2>
+      <p>
+        아래 모의 계산기 프로그램은 소상공인 사장님의 자가 진단을 돕기 위해 개발된 간편 도구입니다. 본인의 대략적인 정보를 입력하시면, 2026년도 기준 금리 조건에 따른 최적의 예상 지원 정책 상품 종류와 함께, 매월 얼마의 상환 비용이 요구되는지 한눈에 비교하고 도출해 줍니다.
+      </p>
+
+      <div class="calculator-container">
+        <div class="form-group">
+          <label for="bizCategory">현재 사업 운영 상태 및 대상 유형</label>
+          <select id="bizCategory">
+            <option value="general">일반 경영 안정이 필요한 일반적인 소상공인</option>
+            <option value="low_credit">신용점수가 비교적 낮은 중저신용자 (NCB 839점 이하)</option>
+            <option value="innovative">스마트기술 활용, 수출, 백년가게 등 혁신 성장형 기업</option>
+            <option value="rechallenge">폐업 후 재도전을 성실하게 준비하는 재창업자</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="creditScore">대표자 개인 NICE 신용점수 (예상치 입력 : 300 점 ~ 1000 점)</label>
+          <input type="number" id="creditScore" min="300" max="1000" value="750">
+        </div>
+
+        <div class="form-group">
+          <label for="requestedAmount">예상 희망 대출 금액 (만원 단위 입력)</label>
+          <input type="number" id="requestedAmount" min="500" max="100000" value="3000">
+        </div>
+
+        <div class="form-group">
+          <label for="periodYears">대출 기간 선택 (총 기간)</label>
+          <select id="periodYears">
+            <option value="5">5년 (2년 거치 이자만 납입 후 3년 원금 균등 분할 상환)</option>
+            <option value="7">7년 (2년 거치 이자만 납입 후 5년 원금 균등 분할 상환)</option>
+          </select>
+        </div>
+
+        <button type="button" class="calc-btn" onclick="calculateLoan()">나의 예상 한도 및 금리 계산하기</button>
+
+        <div id="resultArea" class="result-box">
+          <h4>맞춤형 자가 분석 진단 결과</h4>
+          <p>분석에 근거하여 추천되는 정책자금 및 상환 요약 정보는 아래와 같습니다.</p>
+          <table>
+            <tbody>
+              <tr>
+                <td><strong>추천 드리는 대출 종류</strong></td>
+                <td><span id="resultProgram">일시적경영애로자금</span></td>
+              </tr>
+              <tr>
+                <td><strong>적용 예상 기준 금리</strong></td>
+                <td><span id="resultRate">연 3.44 %</span></td>
+              </tr>
+              <tr>
+                <td><strong>해당 상품의 법적 최대 한도</strong></td>
+                <td><span id="resultLimit">7,000 만원</span></td>
+              </tr>
+              <tr>
+                <td><strong>신청 가능 예상 최대 금액</strong></td>
+                <td><strong style="color: var(--primary-color);"><span id="resultFinalAmount">3,000 만원</span></strong></td>
+              </tr>
+              <tr>
+                <td><strong>1 ~ 24개월 (거치 기간) 매월 예상 이자</strong></td>
+                <td><span id="resultGracePayment">86,000 원</span></td>
+              </tr>
+              <tr>
+                <td><strong>25개월차 이후 매월 예상 원리금 상환액</strong></td>
+                <td><span id="resultRepaymentPayment">900,000 원</span> (원금 및 이자 포함 평균치)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4>상환 세부 일정 스케줄표</h4>
+          <table class="repayment-schedule-table">
+            <thead>
+              <tr>
+                <th>상환 시기 구분</th>
+                <th>매월 총 예상 상환 납입액 및 납입 방식</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleBody">
+              <!-- 스케줄 결과가 스크립트를 통해 주입됩니다 -->
+            </tbody>
+          </table>
+          <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 15px;">
+            주의 : 상기 계산 내용은 소진공 고시 기준금리를 바탕으로 임의 시뮬레이션한 수치입니다. 실제 대출 심사 시 대표자의 담보 조건, 타 기관 정책자금 기대출 잔액, 연체 이력, 우대금리 충족 여부에 따라 실제 최종 적용되는 승인 한도액과 금리 가격에는 차이점이 존재할 수 있으므로 구체적인 내용은 공식 포털 및 카카오톡 지사 안내를 통해 정확한 상담 견적을 받아보시기 바랍니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      function calculateLoan() {
+        const category = document.getElementById('bizCategory').value;
+        const creditScore = parseInt(document.getElementById('creditScore').value) || 700;
+        const requestedAmount = (parseInt(document.getElementById('requestedAmount').value) || 3000) * 10000;
+        const periodYears = parseInt(document.getElementById('periodYears').value) || 5;
+
+        let recommendedProgram = "일시적경영애로자금";
+        let baseRate = 3.44;
+        let maxLimit = 70000000;
+
+        if (category === "low_credit") {
+          recommendedProgram = "신용취약소상공인자금";
+          baseRate = 5.04;
+          maxLimit = 30000000;
+        } else if (category === "innovative") {
+          recommendedProgram = "혁신성장촉진자금 (일반형)";
+          baseRate = 3.84;
+          maxLimit = 100000000;
+        } else if (category === "rechallenge") {
+          recommendedProgram = "재도전특별자금";
+          baseRate = 4.04;
+          maxLimit = 70000000;
+        } else {
+          recommendedProgram = "일시적경영애로자금";
+          baseRate = 3.44;
+          maxLimit = 70000000;
+        }
+
+        let adjustedLimit = maxLimit;
+        if (creditScore < 500) {
+          adjustedLimit = Math.min(adjustedLimit, 15000000);
+        } else if (creditScore < 650) {
+          adjustedLimit = Math.min(adjustedLimit, 30000000);
+        } else if (creditScore < 800) {
+          adjustedLimit = Math.min(adjustedLimit, 50000000);
+        }
+
+        const finalAmount = Math.min(requestedAmount, adjustedLimit);
+        const monthlyRate = (baseRate / 100) / 12;
+
+        const interestOnlyPayment = Math.round(finalAmount * monthlyRate);
+
+        const graceMonths = 24;
+        const totalMonths = periodYears * 12;
+        const repaymentMonths = totalMonths - graceMonths;
+
+        let repaymentPayment = 0;
+        if (monthlyRate > 0) {
+          repaymentPayment = Math.round((finalAmount * monthlyRate * Math.pow(1 + monthlyRate, repaymentMonths)) / (Math.pow(1 + monthlyRate, repaymentMonths) - 1));
+        } else {
+          repaymentPayment = Math.round(finalAmount / repaymentMonths);
+        }
+
+        document.getElementById('resultProgram').textContent = recommendedProgram;
+        document.getElementById('resultRate').textContent = baseRate.toFixed(2) + " %";
+        document.getElementById('resultLimit').textContent = (maxLimit / 10000).toLocaleString() + " 만원";
+        document.getElementById('resultFinalAmount').textContent = (finalAmount / 10000).toLocaleString() + " 만원";
+        document.getElementById('resultGracePayment').textContent = interestOnlyPayment.toLocaleString() + " 원";
+        document.getElementById('resultRepaymentPayment').textContent = repaymentPayment.toLocaleString() + " 원";
+
+        let scheduleHtml = "";
+        scheduleHtml += "<tr><td>1개월 ~ 24개월 (거치 및 이자 유예)</td><td>매월 고정 " + interestOnlyPayment.toLocaleString() + " 원 납입 (원금 동결, 이자 수수료만 납부)</td></tr>";
+        scheduleHtml += "<tr><td>25개월 ~ " + totalMonths + "개월 (원리금 균등상환)</td><td>매월 약 " + repaymentPayment.toLocaleString() + " 원 균등액 분할 납입 (원금 점진적 상환)</td></tr>";
+
+        document.getElementById('scheduleBody').innerHTML = scheduleHtml;
+        document.getElementById('resultArea').style.display = 'block';
+      }
+    </script>
+
+    <section id="comparison">
+      <h2>직접대출과 대리대출의 뚜렷한 차이점 및 장단점</h2>
+      <p>
+        소상공인시장진흥공단에서 집행하는 정책자금은 크게 직접대출 방식과 금융기관 대리대출 방식으로 분류됩니다. 많은 사장님들이 이 두 공급 형태를 헷갈려 하지만, 심사 주체와 보증 절차에서 극명한 차이점이 존재합니다.
+      </p>
+
+      <h3>직접대출과 간접대출 비교 분석</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>평가 구분 항목</th>
+            <th>직접대출 (소진공 다이렉트 융자)</th>
+            <th>대리대출 (은행 간접 대리 융자)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>심사 및 주관 기관</strong></td>
+            <td>소상공인시장진흥공단 자체 정량 및 정성 심사</td>
+            <td>지방 보증재단 보증서 발급 후 시중 민간 은행 심사</td>
+          </tr>
+          <tr>
+            <td><strong>보증서 필요 여부</strong></td>
+            <td>불필요 (신용 또는 순수 신용평가 심사)</td>
+            <td>필수 (보증서 발급에 따른 추가 보증 수수료 비용 발생)</td>
+          </tr>
+          <tr>
+            <td><strong>가장 큰 장점</strong></td>
+            <td>보증료 추가 차감이 없고 심사 속도가 비교적 빠름</td>
+            <td>취급 은행 브랜드가 다양하여 전국 어디서나 대면 신청 가능</td>
+          </tr>
+          <tr>
+            <td><strong>대표적인 단점</strong></td>
+            <td>접수 개시 직후 선착순 조기 마감 성향이 매우 짙음</td>
+            <td>신용 보증재단 심사와 은행 2차 심사를 모두 거쳐야 함</td>
+          </tr>
+          <tr>
+            <td><strong>자금의 종류</strong></td>
+            <td>신용취약자금, 혁신성장자금, 재도전특별자금 등</td>
+            <td>일반경영안정자금, 청년고용연계자금, 대환대출 등</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        직접대출은 소진공이 기금을 직접 제어하기 때문에 중개 금융 보증 수수료가 일절 들지 않는다는 큰 장점이 있습니다. 반면 대리대출은 시중 은행이나 인터넷전문은행(토스, 카카오뱅크 등)의 시스템을 우회하여 연계 적용하므로 대출금 자체는 쉽게 실행될 수 있어도 신용보증기금이나 지역신용보증재단에서 끊어주는 신용 보증서 발급 승인을 선행해야 합니다. 따라서 실질적인 연간 총비용으로 환산해 보면 수수료가 빠지는 직접대출 제도가 제일 저렴한곳에 가깝다고 보아도 과언이 아닙니다.
+      </p>
+    </section>
+
+    <section id="community">
+      <h2>실제 자영업 사장님들의 커뮤니티 반응 및 승인 후기 요약</h2>
+      <p>
+        정부 자금을 이용할 때 사장님들이 대출 계산기나 이론적인 공문서에만 의존하게 되면, 정작 현업에서 부딪히는 구체적인 애로사항을 파악하기 힘듭니다. 국내 최대 규모의 여러 온라인 인터넷 커뮤니티를 통해 취합한 가공 없는 내돈내산 성공 실패 후기와 승인 요령을 핵심만 발췌하여 소개합니다.
+      </p>
+
+      <h3>인터넷 포럼별 의견 및 동향 종합</h3>
+      <ul>
+        <li>
+          <strong>디시인사이드 (디시) 창업 및 대출 갤러리</strong><br>
+          저신용 소상공인들을 위한 정책자금이 매 분기마다 공고되는데, 접수 첫날 오전 9시에 접속자가 몰려 웹페이지가 느려지거나 대기열이 수만 명씩 쌓이는 일이 다반사입니다. 신청 서류를 한 글자라도 틀려 보완 조치가 떨어지면 후순위로 밀리거나 그 즉시 소진 마감되므로, 신청 직전 필요한 제반 증빙 서류인 국세 지방세 납세증명서, 부가가치세 표준증명, 그리고 사업장 임대차계약서 등을 파일 형태로 완벽하게 준비해두는 것이 핵심 팁으로 통용됩니다.
+        </li>
+        <li>
+          <strong>보배드림 자영업 게시판</strong><br>
+          이 자금의 강점은 기존 7%가 넘는 민간 금융권 사업자 대출을 낮은 정부 금리로 대환하거나 갈아타기가 가능하다는 부분입니다. 일반 시중 상품과 비교했을 때 연간 이자 비용 부담을 수백만 원 가까이 경감했다는 실제 후기 글이 빈번히 개제되고 있습니다. 또한 상생협약 플랫폼 소상공인 자격 취득 등을 연동하면 추가적인 사은품이나 현금지원 없이도 이자 할인 요율 자체가 가장 강력한 혜택이라는 긍정적인 평이 지배적입니다.
+        </li>
+        <li>
+          <strong>에펨코리아 (펨코) 자영업 유저 게시판</strong><br>
+          정부 지원금과 직접 융자 혜택에 대해 비교적 냉정한 평가를 내리는 펨코 유저 포럼에서도, 2026년 기준금리 연 3.44% 수준의 융자는 사설 제2금융권 대비 어떠한 대출 상품 종류와 비교하더라도 가장 독보적이라는 데 의견이 모입니다. 다만 연체 기록이 90일 이상 넘어가 신용불량 정보 등록 이력이 남아있으면 아무리 사업성이 훌륭해도 자동 비적격 판정이 떨어지므로 미리 본인의 점수를 관리하는 것이 최우선 순위 과제입니다.
+        </li>
+      </ul>
+    </section>
+
+    <section id="ai-guide">
+      <h2>인공지능(AI) 검색 비서 및 포털 검색을 통한 실시간 최신 융자 정보 추적 요령</h2>
+      <p>
+        정부 부처의 연도별 정책 자금 세부 집행 지침과 수시 수용 한도 변경 내역은 무척 빠르고 즉흥적으로 업데이트됩니다. 단순 네이버 통합 검색이나 구글링만으로는 당월 마감 현황을 놓치기 쉽습니다. 이러한 정보 격차를 극복하기 위해 제미나이(Gemini), 챗지피티(ChatGPT) 등 최신 거대 언어 모델 인공지능 도구를 똑똑하게 활용하는 팁을 안내합니다.
+      </p>
+      <div class="highlight-box">
+        <p>
+          AI 검색 시스템을 효율적으로 이용하려면 질문의 세밀화가 관건입니다. 단순히 소상공인 정책 대출 알려줘라고 묻기보다는 아래와 같이 명확한 맥락과 연도를 적은 전문 프롬프트를 구사하는 것이 좋습니다.
+        </p>
+      </div>
+      <p>
+        AI 검색 권장 프롬프트 예시 :<br>
+        2026년도 소상공인시장진흥공단 혁신성장촉진자금의 신청 자격 조건 중 2년 연속 매출 10% 이상 증가 요건의 세부 증빙 서류 양식을 나열하고, 신청 사이트인 소진공 정책자금 홈페이지의 접수 마감 시간을 연동 검색해서 요약해 줘.
+      </p>
+      <p>
+        위와 같이 구체적인 지표와 고유 명칭을 포함하여 ChatGPT나 Gemini 모델에게 질의할 경우, 인터넷의 최신 크롤러 모듈과 연동하여 네이버 블로그, 유튜브 튜토리얼 비디오 가이드, 트위터 및 페이스북 공식 계정, 인스타그램 요약 뉴스 등에서 파편화되어 있는 공공 데이터를 빠르고 입체적으로 취합해 줍니다. 검색자는 검색어 탐색과 출처 비교 분석 단계를 단 1분으로 줄일 수 있고 체류 시간 확보와 동시에 신속하게 정책 가입 문턱을 노크해 볼 수 있습니다.
+      </p>
+    </section>
+
+    <section id="faq">
+      <h2>소상공인 직접대출 자주 묻는 질문 (FAQ)</h2>
+      
+      <h3>Q1. 2026년 소상공인 직접대출의 평균 실행 기간은 며칠 정도인가요?</h3>
+      <p>
+        온라인 신청 및 비대면 접수를 정상적으로 마친 경우, 주관 기관의 정량적 서류 평가와 영업장 실사 등의 간이 정성 평가 과정을 합쳐 평균적으로 2주일에서 4주일 정도의 심사 기간이 소요됩니다. 다만 해당 분기 최초 공시 시점에 자금 수요가 몰려 신청 순위가 뒤로 밀릴 시에는 최장 1.5개월 이상 지연될 수도 있으므로 상반기 조기 신청을 강하게 권장합니다.
+      </p>
+
+      <h3>Q2. 대출 승인을 받기 위해 지자체 경영 컨설팅 프로그램이나 교육을 꼭 수강해야 하나요?</h3>
+      <p>
+        신용취약소상공인자금의 경우 사전 의무 조건으로 소상공인 지식배움터에서 지정하는 신용관리 관련 이러닝 인터넷 교육 프로그램을 필수로 완납 혹은 이수 완료하셔야 합니다. 그 외 일반 자금들도 소진공 주관의 경영 자문 및 무료 일대일 컨설팅을 이수한 확인증을 보유 시 연 0.1 % 수준의 추가 우대금리 이자 할인 혜택을 얹어주므로 가급적 시간적 여유를 두고 교육을 받아두는 편이 유리합니다.
+      </p>
+
+      <h3>Q3. 폐업 예정인 상태에서 사업 정리 비용으로 해당 대출을 추가로 실행할 수 있을까요?</h3>
+      <p>
+        기본적으로 자격 기준은 신청일 당일까지 유효한 사업자등록 상태를 견고히 유지하면서 정상 영업을 영위하고 있는 존속 기업이어야 합니다. 이미 폐업 신고를 정식으로 완료했거나 사업자등록을 말소 처리한 경우에는 일반 정책 대출 신청 대상에서 탈락됩니다. 다만 이러한 재기 불능 소상공인들을 돕기 위해 재창업 및 신규 재기를 도모하는 희망형 재도전특별자금 혹은 폐업 점포 정리 지원금 형태의 별도 맞춤형 사업 정리 프로그램을 알아보셔야 하며 사유와 현황을 소진공 지사에 유선 상담하시는 것이 좋습니다.
+      </p>
+
+      <h3>Q4. 국세 및 지방세 체납이나 단기 연체 이력이 있어도 접수가 가능한가요?</h3>
+      <p>
+        국세청 기준의 세금 체납, 사채 및 민간 금융 채무 연체 사실이 전산망에 등재되어 있거나 과거 세무 불이행, 현재 신용 정보 관리 대상자로 분류된 사업장은 소진공에서 원칙적으로 대출 신청 자체를 즉각 거부하거나 거절 통보를 보냅니다. 따라서 대출을 접수하기 이전에 반드시 관할 세무서나 지방 자치 지사 채무를 완전 상환하거나 채무조정 분할 완납 약정을 맺은 성실상환자 지위를 획득해야 재도전특별자금 등으로 회생 지원 자금을 신청할 기회가 부여됩니다.
+      </p>
+
+      <h3>Q5. 상품권 가맹점 등록이나 제로페이 가입이 실질적인 이자 할인에 도움을 주나요?</h3>
+      <p>
+        그렇습니다. 2026년 소상공인 정책 대출 세부 시행 지침에 따르면 소상공인시장진흥공단은 모바일 온누리상품권 가맹 가입 점포, 카드형 온누리상품권 취급 매장, 제로페이 가맹점, 전통시장 화재공제 가입 기업, 풍수해 재해 보험 가입 사장님들에게 각각 소정의 가산 금리 감면 혜택을 중복으로 제공합니다. 최종 금리 가격의 마지노선까지 비용을 추가로 줄이고 싶으시다면 이 가맹 가입 요소들을 반드시 사전 충족하시길 바랍니다.
+      </p>
+    </section>
+
+    <section id="links" class="external-links">
+      <h2>국가 지정 공식 신뢰 사이트 및 융자 전문 정보 안내</h2>
+      <p>
+        다양한 브랜드를 사칭하는 미확인 대출 중개 단체나 인터넷 스팸 메시지, 혹은 사은품 지급 및 조건 없는 즉시 승인 및 현금지원이라는 자극적인 미끼 광고에 절대 현혹되지 마십시오. 검증된 공공 정부 기관의 공식 소통 창구를 통해 최신 소식을 조회하시기 바랍니다.
+      </p>
+      <ul>
+
+        <li>
+          <a href="https://namu.wiki/w/%EC%86%8C%EC%83%81%EA%B3%B5%EC%9D%B8" target="_blank" rel="noopener">나무위키 : 소상공인 상세 백과 지식</a><br>
+          대한민국 법률적 정의에 근거한 소상공인의 범위, 종사자 기준, 상시 근로자 요건 및 법적 지위 역사를 총망라하여 정리한 개방형 위키백과 정보입니다.
+        </li>
+        <li>
+          <a href="https://ols.semas.or.kr" target="_blank" rel="noopener">소상공인시장진흥공단 정책자금 공식 온라인 사이트</a><br>
+          공단에서 운용하는 다이렉트 융자와 간접 대리 자금을 온라인 상에서 원스톱으로 서류 접수하고 신청하는 국가 전용 포털입니다.
+        </li>
+        <li>
+          <a href="https://www.semas.or.kr" target="_blank" rel="noopener">소상공인시장진흥공단 본원 홈페이지</a><br>
+          대출뿐만 아니라 전국 전통시장 진흥 사업, 스마트 상점 보급 사업, 무료 경영 컨설팅 지도 등 소상공인 관련 보조 사업 통합 공고 사이트입니다.
+        </li>
+        <li>
+          <a href="https://www.mss.go.kr" target="_blank" rel="noopener">중소벤처기업부 대한민국 공식 누리집</a><br>
+          정책 자금의 거시적인 방향성과 예산 수립, 연도별 융자 제도 통합 공고문을 관장하는 중앙 정부 부처의 공식 행정 홈페이지입니다.
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  
